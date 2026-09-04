@@ -1,7 +1,8 @@
 import { getUnit, getVocabularySets, getSpeakingPractice, vocabularyUrl, speakingUrl, yearLabel } from "./store.js";
+import { readUnitLibraryLocation } from "./deep-links.mjs";
 
 const app = document.querySelector("#app");
-const id = new URLSearchParams(location.search).get("unit");
+const { unitId: id, lessonId: requestedLessonId } = readUnitLibraryLocation(location.search);
 const unit = await getUnit(id);
 let vocab = [];
 try { vocab = await getVocabularySets(); } catch (error) { console.info("[Units] Vocabulary Library unavailable.", error); }
@@ -23,6 +24,16 @@ if (!unit) {
       : lesson.speakingPracticeId
         ? `<p class="warning">Speaking Practice unavailable. <a href="edit.html?unit=${encodeURIComponent(unit.id)}">Edit unit</a></p>`
         : `<p class="muted">Not linked</p>`;
-    return `<article class="lesson"><p class="eyebrow">Lesson ${index + 1}</p><h2>${esc(lesson.title || `Lesson ${index + 1}`)}</h2>${lesson.learningIntention ? `<div><h3>Learning intention</h3><p>${esc(lesson.learningIntention)}</p></div>` : ""}<div class="resource-grid"><div><h3>Vocabulary</h3>${vocabulary ? `<a href="${vocabularyUrl(vocabulary.id)}">${esc(vocabulary.title)} · ${vocabulary.itemCount} items →</a>` : `<p class="muted">Not linked</p>`}</div><div><h3>Speaking</h3>${speakingMarkup}</div></div>${lesson.notes ? `<div><h3>Activities / Notes</h3><p class="preline">${esc(lesson.notes)}</p></div>` : ""}${lesson.resources ? `<div><h3>Resources</h3><p class="links">${resources(lesson.resources)}</p></div>` : ""}</article>`;
+    return `<article class="lesson" data-lesson-id="${esc(lesson.id)}"><p class="eyebrow">Lesson ${index + 1}</p><h2>${esc(lesson.title || `Lesson ${index + 1}`)}</h2>${lesson.learningIntention ? `<div><h3>Learning intention</h3><p>${esc(lesson.learningIntention)}</p></div>` : ""}<div class="resource-grid"><div><h3>Vocabulary</h3>${vocabulary ? `<a href="${vocabularyUrl(vocabulary.id)}">${esc(vocabulary.title)} · ${vocabulary.itemCount} items →</a>` : `<p class="muted">Not linked</p>`}</div><div><h3>Speaking</h3>${speakingMarkup}</div></div>${lesson.notes ? `<div><h3>Activities / Notes</h3><p class="preline">${esc(lesson.notes)}</p></div>` : ""}${lesson.resources ? `<div><h3>Resources</h3><p class="links">${resources(lesson.resources)}</p></div>` : ""}</article>`;
   }).join("")}</section>`;
+  if (requestedLessonId) {
+    const target = [...app.querySelectorAll("[data-lesson-id]")].find(element => element.dataset.lessonId === requestedLessonId);
+    if (target) {
+      target.classList.add("deep-linked");
+      target.tabIndex = -1;
+      requestAnimationFrame(() => { target.scrollIntoView({ block: "start" }); target.focus({ preventScroll: true }); });
+    } else {
+      app.querySelector(".unit-header").insertAdjacentHTML("afterend", `<p class="deep-link-warning">Linked lesson unavailable. The Unit is still available.</p>`);
+    }
+  }
 }
