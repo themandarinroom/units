@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Add a right-hand Worked Examples panel to every Lesson.
+- Let authorised teachers select, preview, upload and remove multiple images per Lesson.
+- Optimise uploaded images to WebP and keep only image references in Unit documents.
+- Stack Worked Examples below lesson content on tablet and mobile layouts.
+
 ## Version 0.2.0 — August 2026
 
 - Reference saved Speaking Practices by stable `speakingPracticeId`.

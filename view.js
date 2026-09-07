@@ -10,6 +10,7 @@ const speakingEntries = await Promise.all(speakingIds.map(async practiceId => [p
 const speaking = new Map(speakingEntries);
 const esc = (value = "") => { const element = document.createElement("div"); element.textContent = value; return element.innerHTML; };
 const resources = value => String(value || "").split("\n").filter(Boolean).map(line => /^https?:\/\//i.test(line.trim()) ? `<a href="${esc(line.trim())}" target="_blank" rel="noopener">${esc(line.trim())} →</a>` : esc(line)).join("<br>");
+const workedExamples = lesson => `<aside class="worked-examples" aria-label="Worked Examples"><h3>Worked Examples</h3>${lesson.workedExamples?.length ? `<div class="worked-example-gallery">${lesson.workedExamples.map((example, index) => `<a href="${esc(example.url)}" target="_blank" rel="noopener"><img src="${esc(example.url)}" alt="${esc(example.alt || `Worked example ${index + 1}`)}"><span>${esc(example.alt || `Example ${index + 1}`)}</span></a>`).join("")}</div>` : `<p class="muted">No examples yet.</p>`}</aside>`;
 
 if (!unit) {
   app.innerHTML = `<a class="back-link" href="./">← All units</a><section class="empty"><h1>Unit not found</h1></section>`;
@@ -23,6 +24,6 @@ if (!unit) {
       : lesson.speakingPracticeId
         ? `<p class="warning">Speaking Practice unavailable. <a href="edit.html?unit=${encodeURIComponent(unit.id)}">Edit unit</a></p>`
         : `<p class="muted">Not linked</p>`;
-    return `<article class="lesson"><p class="eyebrow">Lesson ${index + 1}</p><h2>${esc(lesson.title || `Lesson ${index + 1}`)}</h2>${lesson.learningIntention ? `<div><h3>Learning intention</h3><p>${esc(lesson.learningIntention)}</p></div>` : ""}<div class="resource-grid"><div><h3>Vocabulary</h3>${vocabulary ? `<a href="${vocabularyUrl(vocabulary.id)}">${esc(vocabulary.title)} · ${vocabulary.itemCount} items →</a>` : `<p class="muted">Not linked</p>`}</div><div><h3>Speaking</h3>${speakingMarkup}</div></div>${lesson.notes ? `<div><h3>Activities / Notes</h3><p class="preline">${esc(lesson.notes)}</p></div>` : ""}${lesson.resources ? `<div><h3>Resources</h3><p class="links">${resources(lesson.resources)}</p></div>` : ""}</article>`;
+    return `<article class="lesson"><div class="lesson-layout"><div class="lesson-content"><p class="eyebrow">Lesson ${index + 1}</p><h2>${esc(lesson.title || `Lesson ${index + 1}`)}</h2>${lesson.learningIntention ? `<div><h3>Learning intention</h3><p>${esc(lesson.learningIntention)}</p></div>` : ""}<div class="resource-grid"><div><h3>Vocabulary</h3>${vocabulary ? `<a href="${vocabularyUrl(vocabulary.id)}">${esc(vocabulary.title)} · ${vocabulary.itemCount} items →</a>` : `<p class="muted">Not linked</p>`}</div><div><h3>Speaking</h3>${speakingMarkup}</div></div>${lesson.notes ? `<div><h3>Activities / Notes</h3><p class="preline">${esc(lesson.notes)}</p></div>` : ""}${lesson.resources ? `<div><h3>Resources</h3><p class="links">${resources(lesson.resources)}</p></div>` : ""}</div>${workedExamples(lesson)}</div></article>`;
   }).join("")}</section>`;
 }

@@ -22,4 +22,6 @@ Speaking v0.9.0 stores reusable differentiated practice bundles in `speakingPrac
 
 Version 0.2.0 adds these stable Speaking Practice references while preserving the existing Unit data model and the `mandarin-room-units-v0.1` browser storage key for compatibility.
 
+Each Lesson may also reference up to 12 Worked Example images. The teacher editor accepts multiple image files, optimises them to WebP, and stores only stable image metadata in the Unit document. Images use `units/{unitId}/{lessonId}/worked-example-{id}.webp` in shared Firebase Storage. Production enablement requires the shared Firestore and Storage rules to explicitly allow this optional lesson field and image path; this repository does not deploy those rules.
+
 Vocabulary metadata is read directly from the shared Firebase `vocabularySets` collection. Unit documents retain only the stable set ID and link to `https://themandarinroom.github.io/vocabularylibrary/`.
