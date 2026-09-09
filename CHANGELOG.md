@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## Version 0.3.1 — September 2026
 
 - Add a right-hand Worked Examples panel to every Lesson.
 - Let authorised teachers select, preview, upload and remove multiple images per Lesson.
