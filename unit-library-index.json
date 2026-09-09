@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "provider": "the-mandarin-room-unit-library",
+  "generatedAt": "2026-09-04T04:00:00.000Z",
+  "units": [
+    {
+      "id": "year-5-countries",
+      "yearLevel": 5,
+      "title": "Countries",
+      "url": "https://themandarinroom.github.io/units/view.html?unit=year-5-countries",
+      "lessons": [
+        { "id": "lesson-1788328454984", "title": "Introduction", "url": "https://themandarinroom.github.io/units/view.html?unit=year-5-countries&lesson=lesson-1788328454984" }
+      ]
+    },
+    {
+      "id": "year-6-chinese-names",
+      "yearLevel": 6,
+      "title": "Chinese Names",
+      "url": "https://themandarinroom.github.io/units/view.html?unit=year-6-chinese-names",
+      "lessons": [
+        { "id": "lesson-1788082219655", "title": "Typing Chinese characters", "url": "https://themandarinroom.github.io/units/view.html?unit=year-6-chinese-names&lesson=lesson-1788082219655" },
+        { "id": "lesson-1788082447113", "title": "Homophones", "url": "https://themandarinroom.github.io/units/view.html?unit=year-6-chinese-names&lesson=lesson-1788082447113" },
+        { "id": "lesson-1788083010783", "title": "My Chinese Name I", "url": "https://themandarinroom.github.io/units/view.html?unit=year-6-chinese-names&lesson=lesson-1788083010783" },
+        { "id": "lesson-1788084151755", "title": "My Chinese Name II", "url": "https://themandarinroom.github.io/units/view.html?unit=year-6-chinese-names&lesson=lesson-1788084151755" },
+        { "id": "lesson-1788087277864", "title": "Mini Self-introduction I", "url": "https://themandarinroom.github.io/units/view.html?unit=year-6-chinese-names&lesson=lesson-1788087277864" }
+      ]
+    }
+  ]
+}

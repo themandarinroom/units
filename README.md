@@ -25,3 +25,25 @@ Version 0.2.0 adds these stable Speaking Practice references while preserving th
 Each Lesson may also reference up to 12 Worked Example images. The teacher editor accepts multiple PNG, JPEG, WebP, and browser-decodable HEIC/HEIF files, resizes their longest edge to at most 1800 pixels, and genuinely re-encodes them to WebP. Native browser encoding is used when valid; a bundled libwebp WebAssembly encoder is the compatibility fallback. The RIFF/WebP byte signature is verified before upload, and non-WebP payloads are rejected rather than relabelled. Only stable image metadata is stored in the Unit document. Images use `units/{unitId}/{lessonId}/worked-example-{id}.webp` in shared Firebase Storage. Production enablement requires the shared Firestore and Storage rules to explicitly allow this optional lesson field and image path; this repository does not deploy those rules.
 
 Vocabulary metadata is read directly from the shared Firebase `vocabularySets` collection. Unit documents retain only the stable set ID and link to `https://themandarinroom.github.io/vocabularylibrary/`.
+
+## Read-only integration contract
+
+Specialist Planner reads `unit-library-index.json`, a generated metadata-only snapshot owned by Unit Library. The index contains stable Unit/Lesson IDs, titles, year levels and canonical URLs; it contains no lesson descriptions, activities or teaching resources.
+
+Canonical deep links are:
+
+```text
+https://themandarinroom.github.io/units/view.html?unit=<unitId>
+https://themandarinroom.github.io/units/view.html?unit=<unitId>&lesson=<lessonId>
+```
+
+The Lesson view scrolls to and highlights the exact linked Lesson. An unknown Lesson ID leaves the Unit readable and displays a clear unavailable message. Unit Library remains the source of truth for all teaching content.
+
+Generate the metadata snapshot from an authorised export of the Firebase `units` collection, then review and publish it with this repository:
+
+```sh
+node scripts/generate-unit-library-index.mjs /secure/path/units-export.json
+node --test tests/*.test.mjs
+```
+
+The generator deliberately allowlists only IDs, year level, titles and canonical URLs. It never copies learning intentions, notes, activities, vocabulary, speaking references or resources into the index. Regenerate whenever Unit IDs, Lesson IDs or titles change in Firebase.

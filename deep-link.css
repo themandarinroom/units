@@ -1,0 +1,27 @@
+.lesson.deep-linked {
+  border-color: #2f7159;
+  box-shadow: 0 0 0 4px rgba(47, 113, 89, .16);
+  scroll-margin-top: 18px;
+}
+
+.lesson.deep-linked::before {
+  content: "Opened from Specialist Planner";
+  display: inline-block;
+  margin-bottom: 10px;
+  border-radius: 999px;
+  background: #e5f2eb;
+  color: #245a47;
+  padding: 5px 9px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.deep-link-warning {
+  margin: 18px 0;
+  border: 1px solid #e0bd83;
+  border-radius: 12px;
+  background: #fff5df;
+  color: #744b18;
+  padding: 12px 15px;
+  font-weight: 700;
+}

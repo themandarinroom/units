@@ -10,6 +10,12 @@
 - Accept browser-decodable HEIC/HEIF source images without weakening the 1800px and 2 MiB limits.
 - Version the editor's image-processing module URL so deployed browsers cannot reuse the pre-verification encoder from cache.
 
+## v0.3.0 · 2026-09-04
+
+- Added stable Unit and Lesson deep links with exact-Lesson focus and resilient missing-Lesson messaging.
+- Added a generated, metadata-only integration index for Specialist Planner.
+- Added contract tests proving teaching content is not copied into the index.
+
 ## Version 0.2.0 — August 2026
 
 - Reference saved Speaking Practices by stable `speakingPracticeId`.
