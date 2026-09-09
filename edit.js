@@ -1,6 +1,6 @@
 import { getUnit, saveUnit, getVocabularySets, getSpeakingPractices, makeId, yearLabel } from "./store.js";
 import { getFirebaseServices } from "./firebase.js";
-import { deleteWorkedExample, MAX_WORKED_EXAMPLES, prepareWorkedExample, uploadWorkedExample } from "./worked-examples.js";
+import { deleteWorkedExample, MAX_WORKED_EXAMPLES, prepareWorkedExample, uploadWorkedExample } from "./worked-examples.js?v=webp-1";
 
 const q = selector => document.querySelector(selector);
 const form = q("#unit-form");
@@ -61,7 +61,7 @@ function render() {
       </div><aside class="worked-example-editor" aria-label="Worked Examples for lesson ${index + 1}">
         <div class="worked-example-heading"><div><h3>Worked Examples</h3><span>${exampleCount}/${MAX_WORKED_EXAMPLES}</span></div><p>Upload examples of completed student work.</p></div>
         <div class="worked-example-thumbs">${savedExamples.map((example, imageIndex) => imageCard(example, imageIndex)).join("")}${queuedExamples.map((example, imageIndex) => imageCard(example, savedExamples.length + imageIndex, true)).join("")}</div>
-        <label class="upload-button ${exampleCount >= MAX_WORKED_EXAMPLES ? "disabled" : ""}">+ Add images<input data-images type="file" accept="image/png,image/jpeg,image/webp" multiple ${exampleCount >= MAX_WORKED_EXAMPLES ? "disabled" : ""}></label><small>PNG, JPG or WebP. Up to ${MAX_WORKED_EXAMPLES} images.</small>
+        <label class="upload-button ${exampleCount >= MAX_WORKED_EXAMPLES ? "disabled" : ""}">+ Add images<input data-images type="file" accept="image/png,image/jpeg,image/webp,image/heic,image/heif,.heic,.heif" multiple ${exampleCount >= MAX_WORKED_EXAMPLES ? "disabled" : ""}></label><small>PNG, JPG, HEIC or WebP. Up to ${MAX_WORKED_EXAMPLES} images.</small>
       </aside></div><button type="button" class="delete" data-delete>Delete lesson</button>
     </article>`;
   }).join("") || `<p class="empty">No lessons yet. Add the first lesson.</p>`;
@@ -95,7 +95,7 @@ function deleteLesson(index) {
 
 async function queueImages(lesson, files) {
   const available = MAX_WORKED_EXAMPLES - totalExamples(lesson);
-  const accepted = files.filter(file => file.type.startsWith("image/")).slice(0, available);
+  const accepted = files.filter(file => file.type.startsWith("image/") || /\.(?:png|jpe?g|webp|heic|heif)$/i.test(file.name || "")).slice(0, available);
   if (!accepted.length) { status.textContent = available ? "Choose one or more image files." : `A lesson can contain up to ${MAX_WORKED_EXAMPLES} Worked Examples.`; return; }
   const queued = pendingFor(lesson.id);
   const initialCount = queued.length;

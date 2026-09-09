@@ -6,6 +6,9 @@
 - Let authorised teachers select, preview, upload and remove multiple images per Lesson.
 - Optimise uploaded images to WebP and keep only image references in Unit documents.
 - Stack Worked Examples below lesson content on tablet and mobile layouts.
+- Verify RIFF/WebP bytes before upload and use a bundled libwebp encoder when native Canvas encoding falls back to PNG.
+- Accept browser-decodable HEIC/HEIF source images without weakening the 1800px and 2 MiB limits.
+- Version the editor's image-processing module URL so deployed browsers cannot reuse the pre-verification encoder from cache.
 
 ## Version 0.2.0 — August 2026
 
